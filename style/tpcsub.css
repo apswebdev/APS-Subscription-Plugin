@@ -1,0 +1,20 @@
+
+#cat-meta-box{ float:left; width:800px !important; margin-top:20px}
+#cat-meta-box h3{ text-align:center;height:30px !important; line-height:30px !important; vertical-align:middle !important; font-size:18px !important;}
+.list{ margin:20px; padding:50px; border:1px solid #666;}
+.list_item{font-family:arial; font-size:14px; font-size:14px; font-family:Consolas; }
+#rem{float:left; margin-left:12px; height:15px; line-height:30px; vertical-align:middle;}
+#rss_list_page{float:left; width:400px;min-height:100px; padding:20px; border:1px solid #999; box-shadow:1px 1px 8px 1px #CCC;}
+#rss_list_inner{float:left; padding:20px;clear:both; color:#666; background:#D5EEFF; width:357px; min-height:50px; border-radius:12px;}
+#rss_title{float:left;margin:0px 0px 20px 0px;  position:relative;}
+#textle{position:absolute; top:2px; left:35px; width:200px; font-size:18px; text-shadow: 2px 2px 2px #999; }
+#gen_rss{float:left; clear:both; background:#09C; padding:1px 10px; border-radius:12px; color:#FFF; margin-top:30px; font-size:13px; font-weight:bold}
+#gen_rss:hover{text-decoration:none !important;background:#09E;}
+#rss_list_sel{float:left;width:100%; border-bottom:1px solid #CCC;margin-bottom:12px; font-size:12px;}
+#rss_result{float:left; margin-top:-20px; border:1px solid #066; padding:20px;clear:both; color:#666; width:357px; min-height:50px; border-radius:12px;display:none;position:relative;}
+#rss_a{position:absolute; left:75px; top:35px;}
+#rss_a2{position:absolute; left:75px; top:85px;}
+#rem2, #rem3{float:left; margin-top:12px; margin-left:12px; height:15px; line-height:30px; vertical-align:middle;}
+.email_back{position:absolute; background:url("../images/background.png") repeat; top:-200%; left:-100%; display:none; height:500%; width:250%; z-index:9999998;}
+.email_submain{position:absolute; padding:20px 20px 50px 20px; display:none; top-100px; left:50%; margin-left:-175px; width:330px; height:400px; background:white; border-radius:12px;z-index:9999999;}
+#rss_email_sub{ margin-bottom:12px }
