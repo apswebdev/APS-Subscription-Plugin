@@ -34,19 +34,19 @@ class subscribe
 		
 		  $privatekey = "6Le7n9YSAAAAALfMjKx_sGxeGL4M6Th3q8pAe8ky";
   		  $resp = recaptcha_check_answer ($privatekey,
-                                $_SERVER["REMOTE_ADDR"],
-                                $challenge,
-                                $response); 
+                                                  $_SERVER["REMOTE_ADDR"],
+                                                  $challenge,
+                                                  $response); 
 								
 		  if (!$resp->is_valid) {
 
-			    echo "The reCAPTCHA wasn't entered correctly.";
+			echo "The reCAPTCHA wasn't entered correctly.";
 
-          } else { 	
+                  } else { 	
 		  
-		        self::validate_data($fname, $lname, $email, $type, $cat);				
+                        self::validate_data($fname, $lname, $email, $type, $cat);				
 	
-	      }
+                  }
 
 	}
 
@@ -57,28 +57,28 @@ class subscribe
 	//===================================================================
 	protected static function validate_data($fname, $lname, $email, $type, $cat){
 		       
-			   global $wpdb; 
+		global $wpdb; 
 			   
-               if( self::check_email($email)){
+                if( self::check_email($email)){
 				    
-				   	$result = $wpdb->get_results( $wpdb->prepare("SELECT re_email FROM ".$wpdb->prefix."rss_email 
-	 									                    WHERE re_email = '$email'"));
-	
-					if (!empty($result)){
-						
-							echo "Error: Your email is already in our database!";
-						
-					} else {
-						
-						self::insert_data($fname, $lname, $email, $type, $cat);
-						
-					}
+                        $result = $wpdb->get_results( $wpdb->prepare("SELECT re_email FROM ".$wpdb->prefix."rss_email 
+                                                                      WHERE re_email = '$email'"));
+
+                        if (!empty($result)){
+
+                                echo "Error: Your email is already in our database!";
+
+                        } else {
+
+                                self::insert_data($fname, $lname, $email, $type, $cat);
+
+                        }
 			   
-			   } else {
+		} else {
 			   		
-					echo "Your Email is invalid";	
+			echo "Your Email is invalid";	
 					
-			   }
+		}
 
 	}
 
@@ -91,15 +91,15 @@ class subscribe
 		   /* check email first before anything else */
 		   if(preg_match("/^[_\.0-9a-zA-Z-]+@([0-9a-zA-Z][0-9a-zA-Z-]+\.)+[a-zA-Z]{2,6}$/i", $email))  {
 			   
-				list($userid, $d) = explode( "@", $email);
+			  list($userid, $d) = explode( "@", $email);
 				  
-				  if (!checkdnsrr($d, 'MX')) { 
-				 	  return false;
+			  if (!checkdnsrr($d, 'MX')) { 
+			 	return false;
 		          } else {
-				      return true;
-				  }
+			        return true;
+			  }
 		   } else {
-		   		return false;
+		   	return false;
 		   }
 
 	}
@@ -112,8 +112,7 @@ class subscribe
 		      
 			  global $wpdb;
 			  
-			  $wpdb->get_results( $wpdb->prepare("INSERT INTO ".$wpdb->prefix."rss_email 
-												  VALUES(NULL, '$fname', '$lname', '$email', '$cat', 'active', '$type', '')"));
+			  $wpdb->get_results( $wpdb->prepare("INSERT INTO ".$wpdb->prefix."rss_email VALUES(NULL, '$fname', '$lname', '$email', '$cat', 'active', '$type', '')"));
 			
 			  echo "You have successfully subscribed to our feed!";
 

@@ -21,7 +21,7 @@ class tpcsendemail
 		public static function email_init()
 		{
 				
-	            /* initialize all emails needed */         
+                                /* initialize all emails needed */         
 				$emails = array();
 				$emails = self::email_get_all();
 				
@@ -59,11 +59,11 @@ class tpcsendemail
 			    global $wpdb;
 								
 				$init_email = $wpdb->get_results( $wpdb->prepare("SELECT re_fname, 
-																	 re_lname,
-																	 re_email,
-																	 re_cat 
-															  FROM ".$wpdb->prefix."rss_email 
-															  WHERE re_active = 'active' AND re_type = 'weekly'"));
+                                                                                         re_lname,
+                                                                                         re_email,
+                                                                                         re_cat 
+                                                                                 FROM ".$wpdb->prefix."rss_email 
+                                                                                 WHERE re_active = 'active' AND re_type = 'weekly'"));
 				
 				return $init_email;
 			
@@ -118,12 +118,12 @@ class tpcsendemail
 								$margin_date = date( 'Y-m-d', strtotime('-7 days') );
 								
 								$init_email = $wpdb->get_results($wpdb->prepare("SELECT ".$wpdb->prefix."posts.post_title,
-																						  ".$wpdb->prefix."posts.post_date,  
-																						  ".$wpdb->prefix."posts.guid
-																				  FROM ".$wpdb->prefix."posts
-																				  JOIN ".$wpdb->prefix."term_relationships
-																		ON ".$wpdb->prefix."posts.ID =".$wpdb->prefix."term_relationships.object_id				
-																		WHERE ".$wpdb->prefix."term_relationships.term_taxonomy_id =" . $c));
+                                                                                                                ".$wpdb->prefix."posts.post_date,  
+                                                                                                                ".$wpdb->prefix."posts.guid
+                                                                                                                FROM ".$wpdb->prefix."posts
+                                                                                                                JOIN ".$wpdb->prefix."term_relationships
+                                                                                                                ON ".$wpdb->prefix."posts.ID =".$wpdb->prefix."term_relationships.object_id				
+                                                                                                                WHERE ".$wpdb->prefix."term_relationships.term_taxonomy_id =" . $c));
 															   
 								foreach ($init_email as $e){
 
@@ -138,19 +138,19 @@ class tpcsendemail
 								}
 						
 						}
-			   } else {
+                                } else {
 				   
 				   				$cat_name = get_category($cat);
 								
 								$margin_date = date( 'Y-m-d', strtotime('-7 days') );
 								
 								$init_email = $wpdb->get_results($wpdb->prepare("SELECT ".$wpdb->prefix."posts.post_title,
-																						  ".$wpdb->prefix."posts.post_date,  
-																						  ".$wpdb->prefix."posts.guid
-																				  FROM ".$wpdb->prefix."posts
-																				  JOIN ".$wpdb->prefix."term_relationships
-																		ON ".$wpdb->prefix."posts.ID =".$wpdb->prefix."term_relationships.object_id				
-																		WHERE ".$wpdb->prefix."term_relationships.term_taxonomy_id =" . $cat));
+                                                                                                                 ".$wpdb->prefix."posts.post_date,  
+                                                                                                                 ".$wpdb->prefix."posts.guid
+                                                                                                                 FROM ".$wpdb->prefix."posts
+                                                                                                                 JOIN ".$wpdb->prefix."term_relationships
+                                                                                                                 ON ".$wpdb->prefix."posts.ID =".$wpdb->prefix."term_relationships.object_id				
+                                                                                                                 WHERE ".$wpdb->prefix."term_relationships.term_taxonomy_id =" . $cat));
 															   
 								foreach ($init_email as $e){
 									      
@@ -243,9 +243,7 @@ class tpcsendemail
 			  
 			  $now = date('Y-m-d');
 			  
-			  $check = $wpdb->get_results($wpdb->prepare("SELECT re_int
-												 		  FROM ".$wpdb->prefix."rss_email	 			
-												  		  WHERE re_email = '$recipient' AND re_flag = '$now'"));
+			  $check = $wpdb->get_results($wpdb->prepare("SELECT re_int FROM ".$wpdb->prefix."rss_email WHERE re_email = '$recipient' AND re_flag = '$now'"));
 	
 			  if(!empty($check)) return false; else return true;
 			
@@ -263,7 +261,7 @@ class tpcsendemail
 				
 				$wpdb->get_results($wpdb->prepare("UPDATE ".$wpdb->prefix."rss_email
 				                                   SET re_flag = '$now'
-										           WHERE re_fname = '$fname' AND re_lname = '$lname' AND re_email = '$email'"));
+                                                                   WHERE re_fname = '$fname' AND re_lname = '$lname' AND re_email = '$email'"));
 			
 		}		
 

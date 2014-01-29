@@ -40,19 +40,19 @@ class update_meta
 				if(self::meta_exist()){
 				
 						$wpdb->get_results($wpdb->prepare("UPDATE ".$wpdb->prefix."rss_email_meta
-														   SET meta_value = '$data'
-														   WHERE meta_int = $static_id"));
+                                                                                   SET meta_value = '$data'
+                                                                                   WHERE meta_int = $static_id"));
 						$message = "You have successfully Updated List!";
 
 				} else {
 				
 						$wpdb->get_results($wpdb->prepare("INSERT INTO ".$wpdb->prefix."rss_email_meta
-														   VALUES($static_id, '$data')"));
+										  VALUES($static_id, '$data')"));
 						$message = "You have successfully Inserted List!";
 				
 				}
                 
-                echo $message ."-" .self::meta_exist(); 
+                                 echo $message ."-" .self::meta_exist(); 
 		}
 
 		/*===================================================================
@@ -67,8 +67,8 @@ class update_meta
 				$static_id = 1;
 				
 				$result = $wpdb->get_results( $wpdb->prepare("SELECT meta_value 
-											  				  FROM ".$wpdb->prefix."rss_email_meta 
-											  				  WHERE meta_int = $static_id"));
+                                                                              FROM ".$wpdb->prefix."rss_email_meta 
+                                                                              WHERE meta_int = $static_id"));
 				
 				foreach($result as $res){
 					$meta_val = $res->meta_value;
