@@ -21,14 +21,14 @@ class tpcrssemail
 		 	wp_enqueue_script('tpcsub-json', plugins_url( '/tpc-sub/scripts/json.js' ) );
 			wp_enqueue_script('tpcsub-func', plugins_url( '/tpc-sub/scripts/func.js' ) );
 			wp_enqueue_script('tpcsub-ajax', plugins_url( '/tpc-sub/scripts/ajax.js' ) );
-            wp_enqueue_style( 'tpcsub-style');
+                        wp_enqueue_style( 'tpcsub-style');
 			add_action('admin_menu', array( __CLASS__, 'tpc_form_options'));
 			add_shortcode('rss_fill', array( __CLASS__, 'display_subscription'));
-		    add_filter( 'cron_schedules', array(__CLASS__,'new_cron_sched'));
+                        add_filter( 'cron_schedules', array(__CLASS__,'new_cron_sched'));
 			
 			/* create db upon install */
-		    register_activation_hook(__FILE__, array(__CLASS__, 'Install'));
-            register_deactivation_hook(__FILE__, array(__CLASS__, 'Uninstall'));
+                        register_activation_hook(__FILE__, array(__CLASS__, 'Install'));
+                        register_deactivation_hook(__FILE__, array(__CLASS__, 'Uninstall'));
 			
 			add_action('email_ajax_daily', array(__CLASS__, 'send_daily'));
 			add_action('email_ajax_weekly', array(__CLASS__, 'send_weekly'));
@@ -113,10 +113,10 @@ class tpcrssemail
 			$menu_slug = 'tpcrssemail';
 		
 			add_object_page( $page_title, 
-							 $menu_title, 
-							 $capability, 
-							  $menu_slug,
-							 array( __CLASS__, 'opt_form'));
+                                         $menu_title, 
+                                         $capability, 
+                                         $menu_slug,
+                                         array( __CLASS__, 'opt_form'));
 			
 		}
 
@@ -135,24 +135,24 @@ class tpcrssemail
 					'context' => 'normal',
 					'priority' => 'high',
 					'fields' => array(
-									array(
-									'name' => 'Text box',
-									'desc' => 'Enter something here',
-									'id' => $prefix . 'text',
-									'type' => 'button',
-									'std' => 'Update Category Selections'
-									)
-							)
+                                                            array(
+                                                            'name' => 'Text box',
+                                                            'desc' => 'Enter something here',
+                                                            'id' => $prefix . 'text',
+                                                            'type' => 'button',
+                                                            'std' => 'Update Category Selections'
+                                                            )
+                                            )
 					);
 					
-                add_meta_box($meta_box['id'], 
-				             $meta_box['title'], 
-							 array( __CLASS__, 'show_box'), 
-							 "tpcrssemail", 
-							 $meta_box['context'], 
-							 $meta_box['priority']); 
+                                        add_meta_box($meta_box['id'], 
+                                                     $meta_box['title'], 
+                                                     array( __CLASS__, 'show_box'), 
+                                                     "tpcrssemail", 
+                                                     $meta_box['context'], 
+                                                     $meta_box['priority']); 
 
-				do_meta_boxes('tpcrssemail',$meta_box['context'],$meta_box['priority']);
+                                        do_meta_boxes('tpcrssemail',$meta_box['context'],$meta_box['priority']);
 
 		}
 		
@@ -166,19 +166,19 @@ class tpcrssemail
 					$prefix = 'dbt_';
 					$meta_box = array(
 					'id' => 'cat-meta-box',
-		            'title' => 'TPC - Rss Email Subscription Options',
+                                        'title' => 'TPC - Rss Email Subscription Options',
 					'page' => 'post',
 					'context' => 'normal',
 					'priority' => 'high',
 					'fields' => array(
-									array(
-									'name' => '',
-									'desc' => 'Click to Process Your Request',
-									'id' => $prefix . 'text',
-									'type' => 'button',
-									'std' => 'Update Category Selections'
-									)
-							)
+                                                            array(
+                                                            'name' => '',
+                                                            'desc' => 'Click to Process Your Request',
+                                                            'id' => $prefix . 'text',
+                                                            'type' => 'button',
+                                                            'std' => 'Update Category Selections'
+                                                            )
+                                            )
 					);
 				
 				echo '<input type="hidden" name="mytheme_meta_box_nonce" value="', wp_create_nonce(basename(__FILE__)), '" />';
@@ -194,10 +194,10 @@ class tpcrssemail
                 
 				foreach ($categories as $category_list ) 
 				{  
-				   echo "<div class='list_item'><input type='checkbox' value='".$category_list->cat_ID."' ".
-				   		self::checked($category_list->cat_ID)."/>&nbsp;&nbsp;";
-				   echo  $category_list->cat_name.'</div>';
-				   echo '<br/>';
+                                    echo "<div class='list_item'><input type='checkbox' value='".$category_list->cat_ID."' ".
+                                                    self::checked($category_list->cat_ID)."/>&nbsp;&nbsp;";
+                                    echo  $category_list->cat_name.'</div>';
+                                    echo '<br/>';
 				}
 				
 
@@ -207,15 +207,15 @@ class tpcrssemail
 						$meta = get_post_meta($post->ID, $field['id'], true);
 						
 						switch ($field['type']) {
-						
-								case 'button':
-								echo '<input type="button"  class="button-primary" onClick="update_list()" name="', $field['id'], 
-								'" id="', $field['id'], '" value="', 
-								$meta ? $meta : $field['std'], '" size="30" style="float:left; width:200px" />';
-								echo '<div id= "rem"></div>', '<br />';
 
-								
-								break;
+                                                        case 'button':
+                                                        echo '<input type="button"  class="button-primary" onClick="update_list()" name="', $field['id'], 
+                                                        '" id="', $field['id'], '" value="', 
+                                                        $meta ? $meta : $field['std'], '" size="30" style="float:left; width:200px" />';
+                                                        echo '<div id= "rem"></div>', '<br />';
+
+
+                                                        break;
 
 						}
 		
@@ -233,7 +233,7 @@ class tpcrssemail
 				echo '<input style="clear:both; float:left; margin-top:12px" type="button" class="button-primary" onClick="send_campaign_weekly()"'.
 					 ' value="Send Weekly Rss Campaign"><div id= "rem3"></div>';
 				echo '<div style="float:left; clear:both">Send Emails to Weekly Subscribers. This will send posts that belongs to the user\'s selected categories that was posted within the last 7 days of submission.</div>';
-                echo'</div>';  
+                                echo'</div>';  
 				echo '</table>';
 				
 		}
@@ -247,10 +247,10 @@ class tpcrssemail
   				global $wpdb;
 				
 				$result = $wpdb->get_results( $wpdb->prepare("SELECT meta_value 
-											  				  FROM ".$wpdb->prefix."rss_email_meta 
-											  				  WHERE meta_int = 1"));
+                                                                              FROM ".$wpdb->prefix."rss_email_meta 
+                                                                              WHERE meta_int = 1"));
 		        
-	            foreach($result as $res){
+                                 foreach($result as $res){
 				
 					$meta_val = $res->meta_value;
 				
@@ -316,7 +316,7 @@ class tpcrssemail
 									'<a class="addthis_counter addthis_bubble_style"></a>'+
 									'</div>' +
 									'<script type="text/javascript"> var addthis_config = {"data_track_addressbar":true}' + ';' + '</' + 'script>' +
-						            '<' + 'script type="text/javascript"'+
+                                                                        '<' + 'script type="text/javascript"'+
 									'src="http:'+'//'+'s7.addthis.com/js/300/addthis_widget.js'+'#'+'pubid=ra-506f074158c05f68"></'+'script>';
 									
 									var html2 = "<span class='st_sharethis_large' displayText='ShareThis'></span>" +
@@ -364,9 +364,9 @@ class tpcrssemail
 				<?php
 				$categories = get_categories('orderby=name');  
 				$wp_cats = array();  
-                echo '<div class="email_sub email_back">test</div>'; ?>
+                                echo '<div class="email_sub email_back">test</div>'; ?>
 				
-  			    <!-- setup email subscription with captcha -->
+                                <!-- setup email subscription with captcha -->
 				<div class="email_sub email_submain">
 				        <h2>Subscribe Rss Through Email</h2>
 						<form id="sub_form" method="post" action="../wp-content/plugins/tpc-sub/ajax/subscribe_ajax.php">
@@ -374,7 +374,7 @@ class tpcrssemail
 							 <input type="hidden" id="cat_selected">   
 							 <!-- captcha validation form --> 
 							 <div id="form_inputs">
-						        <div class="f_title">First Name</div> 
+						         <div class="f_title">First Name</div> 
 							 	<input type="text" id="f_name" name="f_name" style="width:200px !important"><br/>
 								
 								<div class="f_title">Last Name</div> 
@@ -428,7 +428,7 @@ class tpcrssemail
 				   }
 				}
 				
-			    echo '</div>';?>
+                                echo '</div>';?>
 				
 				<a href="javascript:;" id="gen_rss" onClick="generate_rss()">Generate RSS Feed</a>
 				
@@ -527,8 +527,8 @@ class tpcrssemail
 			  global $wpdb;
 			  
 			  $check = $wpdb->get_results($wpdb->prepare("SELECT cron_int
-												 		  FROM ".$wpdb->prefix."rss_email_cron	 			
-									                      WHERE cron_value = 'activated'"));  
+                                                                      FROM ".$wpdb->prefix."rss_email_cron	 			
+                                                                      WHERE cron_value = 'activated'"));  
 	
 			  if(!empty($check)) return false; else return true;
 	
@@ -542,352 +542,350 @@ class tpcrssemail
 		
 			  global $wpdb;
 			  
-			  $check = $wpdb->get_results($wpdb->prepare("INSERT INTO ".$wpdb->prefix."rss_email_cron	 			
-									                      VALUES(1, 'activated')"));  
+			  $check = $wpdb->get_results($wpdb->prepare("INSERT INTO ".$wpdb->prefix."rss_email_cron VALUES(1, 'activated')"));  
 	
 	}
 
-		/*===================================================================
-		 *    : initialize call
-		 *    : prepare initial structure of email processing
-		 *    : this will process all that is covered from email sending
-		 *      RSS subscriptions  
-		 *===================================================================*/
-		public static function email_init($method)
-		{
-				
-	            /* initialize all emails needed */         
-				$emails = array();
-				$emails = self::email_get_all($method);
-				
-				/* process send email and get failed messages */         
-				$failed_message[] = self::email_process($emails,$method);
+        /*===================================================================
+            *    : initialize call
+            *    : prepare initial structure of email processing
+            *    : this will process all that is covered from email sending
+            *      RSS subscriptions  
+            *===================================================================*/
+        public static function email_init($method)
+        {
 
-				$chk = 0;
-				
-				foreach($failed_message as $fail){
-						
-					if(!empty($fail)){
-					    $chk++;	
-					}
-					
-				}
-				
-				/* return failed messages */         
-				if($chk != 0){
-					var_dump($failed_message);
-				} else {
-					echo "Successfully Sent All Notifications";
-				}	 		
-		}
-		
+                        /* initialize all emails needed */         
+                        $emails = array();
+                        $emails = self::email_get_all($method);
 
+                        /* process send email and get failed messages */         
+                        $failed_message[] = self::email_process($emails,$method);
 
-		/*===================================================================
-		 *    : get emails
-		 *    : prepare all emails for sending
-		 *===================================================================*/
-		protected static function email_get_all($method)
-		{
-			    global $wpdb;
-				
-				if ($method == "daily"){				
-	
-						$init_email = $wpdb->get_results( $wpdb->prepare("SELECT re_fname, 
-																			 re_lname,
-																			 re_email,
-																			 re_cat 
-																	  FROM ".$wpdb->prefix."rss_email 
-																	  WHERE re_active = 'active' AND re_type = 'daily'"));
-				} elseif ($method == "weekly"){
-	
-						$init_email = $wpdb->get_results( $wpdb->prepare("SELECT re_fname, 
-																			 re_lname,
-																			 re_email,
-																			 re_cat 
-																	  FROM ".$wpdb->prefix."rss_email 
-																	  WHERE re_active = 'active' AND re_type = 'weekly'"));
-				
-				}
-				return $init_email;
-			
-		}
-		
-		/*===================================================================
-		 *    : initialize call
-		 *    : prepare initial structure of email
-		 *===================================================================*/
-		protected static function email_process($emails,$method)
-		{
-				
-				/* loop through email details */
-				foreach($emails as $em => $val){
-				      
-					  /* check if mail is not yet sent */
-					  if(self::email_check_snt($val->re_email)){
-					  
-							  /* get message format */
-							  if($method == 'daily'){
-							  	$message = self::email_construct($val->re_cat);
-							  }elseif($method == 'weekly'){
-							  	$message = self::email_construct_weekly($val->re_cat);
-							  }
-							  
-							  /* send message to recipients */
-							  if(!empty($message)){
-							  	$failed[] = self::email_send($val->re_fname, $val->re_lname, $val->re_email, $message);
-							  }
-					  }
-				
-				}
-				
-		}
-		
-		/*===================================================================
-		 *    : construct email
-		 *    : prepare structure of email to be sent as html
-		 *===================================================================*/
-		protected static function email_construct($cat)
-		{
-			    global $wpdb;
-				
-				$pos = strpos($cat, "-");
-				
-				$details = array();
-						
-				if($pos != false){
-					
-						$cat = explode("-",$cat);
-						
-						foreach($cat as $c){
-								
-								$cat_name = get_category($c);
-								
-								$margin_date = date('Y-m-d');
-								
-								$init_email = $wpdb->get_results($wpdb->prepare("SELECT ".$wpdb->prefix."posts.post_title,
-																						  ".$wpdb->prefix."posts.post_date,  
-																						  ".$wpdb->prefix."posts.guid
-																				  FROM ".$wpdb->prefix."posts
-																				  JOIN ".$wpdb->prefix."term_relationships
-																		ON ".$wpdb->prefix."posts.ID =".$wpdb->prefix."term_relationships.object_id				
-																		WHERE ".$wpdb->prefix."term_relationships.term_taxonomy_id =" . $c));
-															   
-								foreach ($init_email as $e){
+                        $chk = 0;
 
-										  $post_date = date( 'Y-m-d', strtotime($e->post_date) );
-										  
-										  if( $post_date = $margin_date ){
-										  
-										  	$details[] = array($cat_name->name, $e->post_title, $e->post_date, $e->guid,);
-								          
-										  }
-								
-								}
-						
-						}
-			   } else {
-				   
-				   				$cat_name = get_category($cat);
-								
-								$margin_date = date('Y-m-d');
-								
-								$init_email = $wpdb->get_results($wpdb->prepare("SELECT ".$wpdb->prefix."posts.post_title,
-																						  ".$wpdb->prefix."posts.post_date,  
-																						  ".$wpdb->prefix."posts.guid
-																				  FROM ".$wpdb->prefix."posts
-																				  JOIN ".$wpdb->prefix."term_relationships
-																		ON ".$wpdb->prefix."posts.ID =".$wpdb->prefix."term_relationships.object_id				
-																		WHERE ".$wpdb->prefix."term_relationships.term_taxonomy_id =" . $cat));
-															   
-								foreach ($init_email as $e){
-									      
-										  $post_date = date( 'Y-m-d', strtotime($e->post_date) );
-										  
-										  if( $post_date >= $margin_date ){
-										  
-										  	$details[] = array($cat_name->name, $e->post_title, $e->post_date, $e->guid,);
-								          
-										  }
-								}
-			   
-			   
-			   }
-				
-			   return self::email_to_html($details);
-		}
+                        foreach($failed_message as $fail){
 
-		/*===================================================================
-		 *    : construct email
-		 *    : prepare structure of email to be sent as html
-		 *===================================================================*/
-		protected static function email_construct_weekly($cat)
-		{
-			    global $wpdb;
-				
-				$pos = strpos($cat, "-");
-				
-				$details = array();
-						
-				if($pos != false){
-					
-						$cat = explode("-",$cat);
-						
-						foreach($cat as $c){
-								
-								$cat_name = get_category($c);
-								
-								$margin_date = date( 'Y-m-d', strtotime('-7 days') );
-								
-								$init_email = $wpdb->get_results($wpdb->prepare("SELECT ".$wpdb->prefix."posts.post_title,
-																						  ".$wpdb->prefix."posts.post_date,  
-																						  ".$wpdb->prefix."posts.guid
-																				  FROM ".$wpdb->prefix."posts
-																				  JOIN ".$wpdb->prefix."term_relationships
-																		ON ".$wpdb->prefix."posts.ID =".$wpdb->prefix."term_relationships.object_id				
-																		WHERE ".$wpdb->prefix."term_relationships.term_taxonomy_id =" . $c));
-															   
-								foreach ($init_email as $e){
+                                if(!empty($fail)){
+                                    $chk++;	
+                                }
 
-										  $post_date = date( 'Y-m-d', strtotime($e->post_date) );
-										  
-										  if( $post_date > $margin_date ){
-										  
-										  	$details[] = array($cat_name->name, $e->post_title, $e->post_date, $e->guid,);
-								          
-										  }
-								
-								}
-						
-						}
-			   } else {
-				   
-				   				$cat_name = get_category($cat);
-								
-								$margin_date = date( 'Y-m-d', strtotime('-7 days') );
-								
-								$init_email = $wpdb->get_results($wpdb->prepare("SELECT ".$wpdb->prefix."posts.post_title,
-																						  ".$wpdb->prefix."posts.post_date,  
-																						  ".$wpdb->prefix."posts.guid
-																				  FROM ".$wpdb->prefix."posts
-																				  JOIN ".$wpdb->prefix."term_relationships
-																		ON ".$wpdb->prefix."posts.ID =".$wpdb->prefix."term_relationships.object_id				
-																		WHERE ".$wpdb->prefix."term_relationships.term_taxonomy_id =" . $cat));
-															   
-								foreach ($init_email as $e){
-									      
-										  $post_date = date( 'Y-m-d', strtotime($e->post_date) );
-										  
-										  if( $post_date > $margin_date ){
-										  
-										  	$details[] = array($cat_name->name, $e->post_title, $e->post_date, $e->guid,);
-								          
-										  }
-								}
-			   
-			   
-			   }
-				
-			   return self::email_to_html($details);
-		}
+                        }
 
-		/*===================================================================
-		 *    : email to html
-		 *    : this will convert message to html
-		 *===================================================================*/
-		protected static function email_to_html($details)
-		{           
-		    $message="";
-			
-		    if (!empty($details)){            
-					$message = '<div style="padding:50px; border:1px solid #999; float:left ">
-								<h3 style="font-family:Arial, Helvetica, sans-serif; color:#999">' .
-								'Your Daily Subscription Notice as of ' . date('l jS \of F Y') . '</h3>
-								<hr/>
-								<h5 style="font-family:Arial, Helvetica, sans-serif; color:#999">Check Our Articles that you might want to read:</h5>';
-					
-					$cat = "";			
-					
-					foreach($details as $d => $val){
-							  
-							  if($cat != $val[0]){
-								   
-								   $cat = $val[0];
-								   
-								   $message .= '<h4 style="float:left; clear:both; margin-bottom:5px;"><u>'.$cat.'</u></h4>';
-							  
-							  }
-							  
-							  $message .=  '<a href="'.$val[3].'" style="text-decoration:none; clear:both; float:left;">'.$val[1].' - '
-							  . date("F j, Y", strtotime($val[2])) . '</a>';
-						
-					
-					}
-		
-								
-					$message .='</div>'; 
-			}
-			
-			return $message;
-						
-		}		
+                        /* return failed messages */         
+                        if($chk != 0){
+                                var_dump($failed_message);
+                        } else {
+                                echo "Successfully Sent All Notifications";
+                        }	 		
+        }
 
 
-		/*===================================================================
-		 *    : send emails
-		 *    : prepare initial structure of email
-		 *===================================================================*/
-		protected static function email_send($fname, $lname, $email, $message)
-		{
 
-					$subject = "To: $fname, $lname Our Rss Update";
-					
-					add_filter('wp_mail_content_type',create_function('', 'return "text/html";'));
-					
-					wp_mail($email, $subject, $message, $headers);
-					
-					self::update_status_mail($fname,$lname,$email);					         
-			
-		}
-		
-		/*===================================================================
-		 *    : email_check_sent
-		 *    : check if email is sent already today
-		 *===================================================================*/
-		protected static function email_check_snt($recipient)
-		{
-			  
-			  global $wpdb;
-			  
-			  $recipient = trim($recipient);
-			  
-			  $check = "";
-			  
-			  $now = date('Y-m-d');
-			  
-			  $check = $wpdb->get_results($wpdb->prepare("SELECT re_int
-												 		  FROM ".$wpdb->prefix."rss_email	 			
-									                      WHERE re_email = '$recipient' AND re_flag = '$now'"));  
-	
-			  if(!empty($check)) return false; else return true;
-			
-		}
+        /*===================================================================
+            *    : get emails
+            *    : prepare all emails for sending
+            *===================================================================*/
+        protected static function email_get_all($method)
+        {
+                    global $wpdb;
 
-		/*===================================================================
-		 *    : update status emails
-		 *    : to update the date today of the record
-		 *===================================================================*/
-		protected static function update_status_mail($fname, $lname, $email)
-		{       
-		 		global $wpdb;
-				
-				$now = date('Y-m-d');
-				
-				$wpdb->get_results($wpdb->prepare("UPDATE ".$wpdb->prefix."rss_email
-				                                   SET re_flag = '$now'
-										           WHERE re_fname = '$fname' AND re_lname = '$lname' AND re_email = '$email'"));
-			
-		}	
+                        if ($method == "daily"){				
+
+                                        $init_email = $wpdb->get_results( $wpdb->prepare("SELECT re_fname, 
+                                                                                                        re_lname,
+                                                                                                        re_email,
+                                                                                                        re_cat 
+                                                                                         FROM ".$wpdb->prefix."rss_email 
+                                                                                         WHERE re_active = 'active' AND re_type = 'daily'"));
+                        } elseif ($method == "weekly"){
+
+                                        $init_email = $wpdb->get_results( $wpdb->prepare("SELECT re_fname, 
+                                                                                                        re_lname,
+                                                                                                        re_email,
+                                                                                                        re_cat 
+                                                                                         FROM ".$wpdb->prefix."rss_email 
+                                                                                         WHERE re_active = 'active' AND re_type = 'weekly'"));
+
+                        }
+                        return $init_email;
+
+        }
+
+        /*===================================================================
+            *    : initialize call
+            *    : prepare initial structure of email
+            *===================================================================*/
+        protected static function email_process($emails,$method)
+        {
+
+                        /* loop through email details */
+                        foreach($emails as $em => $val){
+
+                                    /* check if mail is not yet sent */
+                                    if(self::email_check_snt($val->re_email)){
+
+                                                    /* get message format */
+                                                    if($method == 'daily'){
+                                                        $message = self::email_construct($val->re_cat);
+                                                    }elseif($method == 'weekly'){
+                                                        $message = self::email_construct_weekly($val->re_cat);
+                                                    }
+
+                                                    /* send message to recipients */
+                                                    if(!empty($message)){
+                                                        $failed[] = self::email_send($val->re_fname, $val->re_lname, $val->re_email, $message);
+                                                    }
+                                    }
+
+                        }
+
+        }
+
+        /*===================================================================
+            *    : construct email
+            *    : prepare structure of email to be sent as html
+            *===================================================================*/
+        protected static function email_construct($cat)
+        {
+                    global $wpdb;
+
+                        $pos = strpos($cat, "-");
+
+                        $details = array();
+
+                        if($pos != false){
+
+                                        $cat = explode("-",$cat);
+
+                                        foreach($cat as $c){
+
+                                                        $cat_name = get_category($c);
+
+                                                        $margin_date = date('Y-m-d');
+
+                                                        $init_email = $wpdb->get_results($wpdb->prepare("SELECT ".$wpdb->prefix."posts.post_title,
+                                                                                                        ".$wpdb->prefix."posts.post_date,  
+                                                                                                        ".$wpdb->prefix."posts.guid
+                                                                                                        FROM ".$wpdb->prefix."posts
+                                                                                                        JOIN ".$wpdb->prefix."term_relationships
+                                                                                                        ON ".$wpdb->prefix."posts.ID =".$wpdb->prefix."term_relationships.object_id				
+                                                                                                        WHERE ".$wpdb->prefix."term_relationships.term_taxonomy_id =" . $c));
+
+                                                        foreach ($init_email as $e){
+
+                                                                            $post_date = date( 'Y-m-d', strtotime($e->post_date) );
+
+                                                                            if( $post_date = $margin_date ){
+
+                                                                                $details[] = array($cat_name->name, $e->post_title, $e->post_date, $e->guid,);
+
+                                                                            }
+
+                                                        }
+
+                                        }
+                    } else {
+
+                                                        $cat_name = get_category($cat);
+
+                                                        $margin_date = date('Y-m-d');
+
+                                                        $init_email = $wpdb->get_results($wpdb->prepare("SELECT ".$wpdb->prefix."posts.post_title,
+                                                                                                        ".$wpdb->prefix."posts.post_date,  
+                                                                                                        ".$wpdb->prefix."posts.guid
+                                                                                                        FROM ".$wpdb->prefix."posts
+                                                                                                        JOIN ".$wpdb->prefix."term_relationships
+                                                                                                        ON ".$wpdb->prefix."posts.ID =".$wpdb->prefix."term_relationships.object_id				
+                                                                                                        WHERE ".$wpdb->prefix."term_relationships.term_taxonomy_id =" . $cat));
+
+                                                        foreach ($init_email as $e){
+
+                                                                            $post_date = date( 'Y-m-d', strtotime($e->post_date) );
+
+                                                                            if( $post_date >= $margin_date ){
+
+                                                                                $details[] = array($cat_name->name, $e->post_title, $e->post_date, $e->guid,);
+
+                                                                            }
+                                                        }
+
+
+                    }
+
+                    return self::email_to_html($details);
+        }
+
+        /*===================================================================
+            *    : construct email
+            *    : prepare structure of email to be sent as html
+            *===================================================================*/
+        protected static function email_construct_weekly($cat)
+        {
+                    global $wpdb;
+
+                        $pos = strpos($cat, "-");
+
+                        $details = array();
+
+                        if($pos != false){
+
+                                        $cat = explode("-",$cat);
+
+                                        foreach($cat as $c){
+
+                                                        $cat_name = get_category($c);
+
+                                                        $margin_date = date( 'Y-m-d', strtotime('-7 days') );
+
+                                                        $init_email = $wpdb->get_results($wpdb->prepare("SELECT ".$wpdb->prefix."posts.post_title,
+                                                                                                        ".$wpdb->prefix."posts.post_date,  
+                                                                                                        ".$wpdb->prefix."posts.guid
+                                                                                                        FROM ".$wpdb->prefix."posts
+                                                                                                        JOIN ".$wpdb->prefix."term_relationships
+                                                                                                        ON ".$wpdb->prefix."posts.ID =".$wpdb->prefix."term_relationships.object_id				
+                                                                                                        WHERE ".$wpdb->prefix."term_relationships.term_taxonomy_id =" . $c));
+
+                                                        foreach ($init_email as $e){
+
+                                                                            $post_date = date( 'Y-m-d', strtotime($e->post_date) );
+
+                                                                            if( $post_date > $margin_date ){
+
+                                                                                $details[] = array($cat_name->name, $e->post_title, $e->post_date, $e->guid,);
+
+                                                                            }
+
+                                                        }
+
+                                        }
+                    } else {
+
+                                                        $cat_name = get_category($cat);
+
+                                                        $margin_date = date( 'Y-m-d', strtotime('-7 days') );
+
+                                                        $init_email = $wpdb->get_results($wpdb->prepare("SELECT ".$wpdb->prefix."posts.post_title,
+                                                                                                        ".$wpdb->prefix."posts.post_date,  
+                                                                                                        ".$wpdb->prefix."posts.guid
+                                                                                                        FROM ".$wpdb->prefix."posts
+                                                                                                        JOIN ".$wpdb->prefix."term_relationships
+                                                                                                        ON ".$wpdb->prefix."posts.ID =".$wpdb->prefix."term_relationships.object_id				
+                                                                                                        WHERE ".$wpdb->prefix."term_relationships.term_taxonomy_id =" . $cat));
+
+                                                        foreach ($init_email as $e){
+
+                                                                            $post_date = date( 'Y-m-d', strtotime($e->post_date) );
+
+                                                                            if( $post_date > $margin_date ){
+
+                                                                                $details[] = array($cat_name->name, $e->post_title, $e->post_date, $e->guid,);
+
+                                                                            }
+                                                        }
+
+
+                    }
+
+                    return self::email_to_html($details);
+        }
+
+        /*===================================================================
+            *    : email to html
+            *    : this will convert message to html
+            *===================================================================*/
+        protected static function email_to_html($details)
+        {           
+            $message="";
+
+            if (!empty($details)){            
+                                $message = '<div style="padding:50px; border:1px solid #999; float:left ">
+                                                        <h3 style="font-family:Arial, Helvetica, sans-serif; color:#999">' .
+                                                        'Your Daily Subscription Notice as of ' . date('l jS \of F Y') . '</h3>
+                                                        <hr/>
+                                                        <h5 style="font-family:Arial, Helvetica, sans-serif; color:#999">Check Our Articles that you might want to read:</h5>';
+
+                                $cat = "";			
+
+                                foreach($details as $d => $val){
+
+                                                    if($cat != $val[0]){
+
+                                                            $cat = $val[0];
+
+                                                            $message .= '<h4 style="float:left; clear:both; margin-bottom:5px;"><u>'.$cat.'</u></h4>';
+
+                                                    }
+
+                                                    $message .=  '<a href="'.$val[3].'" style="text-decoration:none; clear:both; float:left;">'.$val[1].' - '
+                                                    . date("F j, Y", strtotime($val[2])) . '</a>';
+
+
+                                }
+
+
+                                $message .='</div>'; 
+                }
+
+                return $message;
+
+        }		
+
+
+        /*===================================================================
+            *    : send emails
+            *    : prepare initial structure of email
+            *===================================================================*/
+        protected static function email_send($fname, $lname, $email, $message)
+        {
+
+                                $subject = "To: $fname, $lname Our Rss Update";
+
+                                add_filter('wp_mail_content_type',create_function('', 'return "text/html";'));
+
+                                wp_mail($email, $subject, $message, $headers);
+
+                                self::update_status_mail($fname,$lname,$email);					         
+
+        }
+
+        /*===================================================================
+            *    : email_check_sent
+            *    : check if email is sent already today
+            *===================================================================*/
+        protected static function email_check_snt($recipient)
+        {
+
+                    global $wpdb;
+
+                    $recipient = trim($recipient);
+
+                    $check = "";
+
+                    $now = date('Y-m-d');
+
+                    $check = $wpdb->get_results($wpdb->prepare("SELECT re_int FROM ".$wpdb->prefix."rss_email	 			
+                                                                WHERE re_email = '$recipient' AND re_flag = '$now'"));  
+
+                    if(!empty($check)) return false; else return true;
+
+        }
+
+        /*===================================================================
+            *    : update status emails
+            *    : to update the date today of the record
+            *===================================================================*/
+        protected static function update_status_mail($fname, $lname, $email)
+        {       
+                        global $wpdb;
+
+                        $now = date('Y-m-d');
+
+                        $wpdb->get_results($wpdb->prepare("UPDATE ".$wpdb->prefix."rss_email
+                                                           SET re_flag = '$now'
+                                                           WHERE re_fname = '$fname' AND re_lname = '$lname' AND re_email = '$email'"));
+
+        }	
 
 }
 
